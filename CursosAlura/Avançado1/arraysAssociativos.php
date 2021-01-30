@@ -45,5 +45,5 @@ $contas[2] = $conta1;
 $contas[] = $conta1;
 
 for ($i = 0; $i < count($contas); $i++) {
-    echo $contas[$i]['titular'] . " " . $contas[$i]['saldo'] . PHP_EOL;
+    echo "{$contas[$i]['titular']} {$contas[$i]['saldo']} " . PHP_EOL;
 }
