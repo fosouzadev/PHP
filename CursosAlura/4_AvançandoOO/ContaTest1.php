@@ -4,15 +4,16 @@ namespace alura\banco;
 
 require 'autoload.php';
 
-use alura\banco\models\conta\{ Conta, Titular };
+use alura\banco\models\conta\{ ContaCorrente, ContaPoupanca, Titular };
 use alura\banco\models\{ Endereco, Cpf };
+use alura\banco\util\Functions;
 
 $endereco = new Endereco('São Paulo', 'Vila Teste', 'Rua Abc', '123');
 
-$conta1 = new Conta(new Titular(new Cpf('111'), 'Jose', $endereco));
+$conta1 = new ContaCorrente(new Titular(new Cpf('111'), 'Jose', $endereco));
 
-$conta2 = new Conta(new Titular(new Cpf('111'), 'Maria', $endereco));
+$conta2 = new ContaPoupanca(new Titular(new Cpf('111'), 'Maria', $endereco));
 
 
-util\imprimeConta($conta1);
-util\imprimeConta($conta2);
+Functions::imprimeConta($conta1);
+Functions::imprimeConta($conta2);

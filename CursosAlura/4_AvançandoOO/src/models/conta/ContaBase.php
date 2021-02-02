@@ -6,7 +6,7 @@ require 'autoload.php';
 
 use Alura\banco\models\conta\Titular;
 
-class Conta {
+abstract class ContaBase {
     # atributos
     private Titular $titular;
     private float $saldo;
@@ -25,7 +25,7 @@ class Conta {
         $this->saldo = 0;
 
         // acessar usando Conta ou self
-        Conta::$quantidadeContas++;
+        ContaBase::$quantidadeContas++;
     }
 
     # destructor, chamdo sempre que o garbage collector limpa objeto
@@ -46,12 +46,15 @@ class Conta {
     # métodos
     public function sacar(float $valorSaque) : bool {
         if ($valorSaque > 0 && $valorSaque <= $this->saldo) {
+            $valorSaque += $valorSaque * $this->ObterTarifa();
             $this->saldo -= $valorSaque;
             return true;
         }
 
         return false;
     }
+
+    protected abstract function ObterTarifa() : float;
 
     public function depositar(float $valorDeposito) : bool {
         if ($valorDeposito > 0) {
@@ -60,12 +63,5 @@ class Conta {
         }
 
         return false;
-    }
-
-    public function transferir(float $valorTransferencia, Conta $contaDestino) : bool {
-        $saqueOk = $this->sacar($valorTransferencia);
-        $depositoOk = $contaDestino->depositar($valorTransferencia);
-
-        return $saqueOk && $depositoOk;
     }
 }
