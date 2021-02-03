@@ -1,6 +1,6 @@
 <?php
 
-namespace alura\banco;
+namespace alura\banco\services;
 
 require 'autoload.php';
 

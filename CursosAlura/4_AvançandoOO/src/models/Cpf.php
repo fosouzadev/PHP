@@ -2,7 +2,8 @@
 
 namespace alura\banco\models;
 
-class Cpf {
+// classe final não pode ser herdada
+final class Cpf {
 
     private string $cpf;
 
