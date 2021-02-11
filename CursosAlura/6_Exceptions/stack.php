@@ -10,12 +10,19 @@ function f1() : void {
 
         // error
         $divisao = intdiv(5, 0);
-    } catch (RuntimeException | DivisionByZeroError $ex) {
+    } 
+    //catch (RuntimeException | DivisionByZeroError $ex) {  // exception e erro específico
+    //catch (Throwable $ex) { // interface que captura todos os erros e exceptions
+    catch (Exception | Error $ex) { // captura todas as exception e erros
+
         echo "Erro tratado em f1: {$ex->getMessage()}" . PHP_EOL;
     }
     // catch (DivisionByZeroError $ex2) {
     //     echo "Erro tratado em f1: {$ex2->getMessage()}" . PHP_EOL;
     // }
+    finally {
+        echo "Sempre executa" . PHP_EOL;
+    }
 
     f2();
     echo 'Saindo f1' . PHP_EOL;
