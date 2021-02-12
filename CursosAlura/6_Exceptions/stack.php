@@ -16,11 +16,12 @@ function f1() : void {
     catch (Exception | Error $ex) { // captura todas as exception e erros
 
         echo "Erro tratado em f1: {$ex->getMessage()}" . PHP_EOL;
+        //return;
     }
     // catch (DivisionByZeroError $ex2) {
     //     echo "Erro tratado em f1: {$ex2->getMessage()}" . PHP_EOL;
     // }
-    finally {
+    finally { // mesmo tendo um return no bloco try ou catch, o finally é executado
         echo "Sempre executa" . PHP_EOL;
     }
 
@@ -30,9 +31,6 @@ function f1() : void {
 
 function f2() : void {
     echo 'Entrei f2' . PHP_EOL;
-
-    for ($i = 1; $i <= 5; $i++)
-        echo "$i ";
 
     echo PHP_EOL . 'Saindo f2' . PHP_EOL;
 }
