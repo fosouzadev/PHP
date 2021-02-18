@@ -1,11 +1,12 @@
 <?php
 
 use Alura\Pdo\Domain\Model\Student;
+use Alura\Pdo\Infrastructure\Persistence\ConnectionCreator;
 
 require_once 'vendor/autoload.php';
 
-$databasePath = __DIR__ . '/banco.sqlite';
-$pdo = new PDO('sqlite:' . $databasePath);
+
+$pdo = ConnectionCreator::createConnection();
 
 // simulação de sql injection
 $student = new Student(null, "Fulano da Silva', ''); DROP TABLE students; --", new \DateTimeImmutable('1997-10-15'));
