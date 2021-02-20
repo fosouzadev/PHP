@@ -12,3 +12,22 @@
 
 # criar base de dados
     vendor\bin\doctrine.bat orm:schema-tool:create
+
+# instalar migrations doctrine
+    composer require doctrine/migrations
+
+# ver comandos do migrations
+    vendor\bin\doctrine-migrations
+
+# exibe o status das migrations
+    vendor\bin\doctrine-migrations migrations:status
+
+# compara o banco de dados existente com os mapeamentos para gerar as migrations
+    vendor\bin\doctrine-migrations migrations:diff
+
+# executar migrations especifica
+    vendor\bin\doctrine-migrations migrations:execute --up NumerodaVersaoDaClasseMigration
+    vendor\bin\doctrine-migrations migrations:execute --down NumerodaVersaoDaClasseMigration
+
+# executar todas as migrations
+    vendor\bin\doctrine-migrations migrations:migrate
