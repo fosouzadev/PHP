@@ -9,9 +9,15 @@ require 'vendor/autoload.php';
 $pdo = ConnectionCreator::createConnection();
 $studentRepository = new PdoStudentRepository($pdo);
 
-$pdo->beginTransaction();
+try {
+    $pdo->beginTransaction();
 
-$studentRepository->save(new Student(null, 'Nico Steppat', new DateTimeImmutable('1985-05-01')));
-$studentRepository->save(new Student(null, 'Sergio Lopes', new DateTimeImmutable('1985-05-01')));
+    $studentRepository->save(new Student(null, 'Nico Steppat', new DateTimeImmutable('1985-05-01')));
+    $studentRepository->save(new Student(null, 'Sergio Lopes', new DateTimeImmutable('1985-05-01')));
 
-$pdo->commit();
+    $pdo->commit();
+} 
+catch (Exception $ex) {
+    echo $ex->getMessage();
+    $pdo->rollBack();
+}

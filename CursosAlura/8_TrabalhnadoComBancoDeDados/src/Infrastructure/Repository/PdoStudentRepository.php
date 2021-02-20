@@ -2,7 +2,7 @@
 
 namespace Alura\Pdo\Infrastructure\Repository;
 
-use Alura\Pdo\Domain\Model\Student;
+use Alura\Pdo\Domain\Model\{Student, Phone};
 use Alura\Pdo\Domain\Repository\StudentRepository;
 use PDO;
 
@@ -20,17 +20,52 @@ class PdoStudentRepository implements StudentRepository
         $statement = $this->pdo->query('SELECT * FROM students');
         $studentList = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-        $students = [];
+        return $this->ToStudent($studentList);
+    }
 
+    public function studentsWithPhones(): array
+    {
+        $statement = $this->pdo->query('
+            SELECT 
+                st.id, st.name, st.birth_date,
+                ph.id phoneId, ph.area_code, ph.number
+            FROM 
+                students st join phones ph
+                ON st.id = ph.student_id
+        ');
+        $studentList = $statement->fetchAll();
+
+        $studentsResult = [];
         foreach ($studentList as $student) {
-            $students[] = new Student (
-                $student['id'],
-                $student['name'],
-                new \DateTimeImmutable($student['birth_date'])
-            );
+            if (!array_key_exists($student['id'], $studentsResult)) {
+                $studentsResult[$student['id']] = new Student (
+                    $student['id'],
+                    $student['name'],
+                    new \DateTimeImmutable($student['birth_date'])
+                );
+            }
+            
+            $studentsResult[$student['id']]->addPhone(new Phone(
+                $student['phoneId'],
+                $student['area_code'],
+                $student['number']
+            ));
         }
 
-        return $students;
+        return $studentsResult;
+    }
+
+    public function studentById(int $id): Student
+    {
+        $statement = $this->pdo->prepare('SELECT * FROM students where id = :id');
+        $statement->bindValue(':id', $id, PDO::PARAM_INT);
+        $statement->execute();
+        $student = $statement->fetch();
+
+        $studentList = [];
+        $studentList[] = $student;
+
+        return $this->ToStudent($studentList)[0];
     }
 
     public function studentBirthAt(\DateTimeInterface $birthDate): array
@@ -39,19 +74,47 @@ class PdoStudentRepository implements StudentRepository
         $statement->bindValue(':birth_date', $birthDate->format('Y-m-d'));
         $statement->execute();
 
-        $studentList = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $studentList = $statement->fetchAll(PDO::FETCH_ASSOC); // FETCH_ASSOC foi definido como padrão no pdo
 
-        $students = [];
+        return $this->ToStudent($studentList);
+    }
 
-        foreach ($studentList as $student) {
-            $students[] = new Student (
+    private function ToStudent(array $students) : array
+    {
+        $studentsResult = [];
+
+        foreach ($students as $student) {
+            $studentsResult[] = $studentObj = new Student (
                 $student['id'],
                 $student['name'],
                 new \DateTimeImmutable($student['birth_date'])
             );
+
+            $this->fillPhonesOf($studentObj);
         }
 
-        return $students;
+        return $studentsResult;
+    }
+
+    private function fillPhonesOf(Student $student): void
+    {
+        $sql = 'SELECT id, area_code, number FROM phones WHERE student_id = :studentId';
+        $statement = $this->pdo->prepare($sql);
+        $statement->bindValue(':studentId', $student->id(), PDO::PARAM_INT);
+        $statement->execute();
+
+        $phoneDataList = $statement->fetchAll();
+        foreach ($phoneDataList as $phoneData) {
+            $phone = new Phone(
+                $phoneData['id'],
+                $phoneData['area_code'],
+                $phoneData['number']
+            );
+
+            $student->addPhone($phone);
+        }
+
+        $phoneDataList = $statement->fetchAll();
     }
 
     public function save(Student $student): bool
@@ -68,6 +131,10 @@ class PdoStudentRepository implements StudentRepository
         $sql = "INSERT INTO students (name, birth_date) VALUES (:name, :birth_date);";
         $statement = $this->pdo->prepare($sql);
         
+        // if ($statement === false) {
+        //     throw new \Exception($this->pdo->errorInfo()[2]);
+        // }
+
         // $statement->bindValue(':name', $student->name());
         // $statement->bindValue(':birth_date', $student->birthDate()->format('Y-m-d'));
         // return $statement->execute();
