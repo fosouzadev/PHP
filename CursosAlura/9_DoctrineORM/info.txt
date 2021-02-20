@@ -1,0 +1,14 @@
+# para ter acesso as opções de linha de comando necessário criar na pasta raiz o arquivo:
+    cli-config.php
+
+# exibir comandos de linha de comando do doctrine
+    vendor\bin\doctrine.bat list
+
+# exibir entidades mapeadas
+    vendor\bin\doctrine.bat orm:info
+
+# exibe detalhes de uma entidade mapeadas
+    vendor\bin\doctrine.bat orm:mapping:describe Aluno
+
+# criar base de dados
+    vendor\bin\doctrine.bat orm:schema-tool:create
