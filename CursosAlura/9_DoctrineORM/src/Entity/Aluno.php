@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
 /**
- * @Entity
+ * @Entity(repositoryClass="Alura\Doctrine\Repository\AlunoRepository")
  */
 class Aluno
 {
@@ -27,9 +27,16 @@ class Aluno
      */
     private $telefones;
 
+    /**
+     * @ManyToMany(targetEntity="Curso", mappedBy="alunos")
+     * @var Collection $cursos
+     */
+    private $cursos;
+
     public function __construct()
     {
         $this->telefones = new ArrayCollection();
+        $this->cursos = new ArrayCollection();
     }
 
     public function id() : int
@@ -64,5 +71,17 @@ class Aluno
     public function telefones(): Collection
     {
         return $this->telefones;
+    }
+
+    public function AddCurso(Curso $curso): self
+    {
+        $this->cursos->add($curso);
+        $curso->addAluno($this);
+        return $this;
+    }
+
+    public function cursos(): Collection
+    {
+        return $this->cursos;
     }
 }
