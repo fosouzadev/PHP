@@ -2,6 +2,8 @@
     
     <form action="/salvar-curso" method="POST">
         <div class="form-group">
+            <input type="hidden" id="id" name="id" value="<?= isset($curso) ? $curso->getId() : ''; ?>" />
+
             <label for="descricao">Descricao</label>
             <input 
                 type="text" 

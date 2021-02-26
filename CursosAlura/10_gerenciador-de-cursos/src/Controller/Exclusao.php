@@ -4,7 +4,7 @@ namespace Alura\Cursos\Controller;
 use Alura\Cursos\Entity\Curso;
 use Alura\Cursos\Infra\EntityManagerCreator;
 
-class Exclusao implements IControladorRequisicao
+class Exclusao extends BaseController implements IControladorRequisicao
 {
     /** @var \Doctrine\ORM\EntityManagerInterface */
     private $entityManager;

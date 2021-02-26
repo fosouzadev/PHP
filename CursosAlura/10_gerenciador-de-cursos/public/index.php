@@ -12,6 +12,13 @@ if (!array_key_exists($caminho, $rotas)) {
     exit();
 }
 
+session_start();
+
+if ($caminho !== '/login' && $caminho !== '/realiza-login' && !isset($_SESSION['logado'])) {
+    header('Location: /login');
+    exit();
+}
+
 $classeControladora = $rotas[$caminho];
 /** @var IControladorRequisicao $controlador */
 $controlador = new $classeControladora();

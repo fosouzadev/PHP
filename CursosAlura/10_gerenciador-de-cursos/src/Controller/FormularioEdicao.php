@@ -1,10 +1,11 @@
 <?php
 
 namespace Alura\Cursos\Controller;
+
 use Alura\Cursos\Entity\Curso;
 use Alura\Cursos\Infra\EntityManagerCreator;
 
-class FormularioEdicao implements IControladorRequisicao
+class FormularioEdicao extends BaseController implements IControladorRequisicao
 {
     /** @var ObjectRepository $repository */
     private $repository;
@@ -26,6 +27,9 @@ class FormularioEdicao implements IControladorRequisicao
 
         $curso = $this->repository->find($id);
         $titulo = 'Alterar curso ' . $curso->getDescricao();
-        require __DIR__ . '/../../view/cursos/formulario.php';
+
+        $data = [ 'curso' => $curso, 'titulo' => $titulo ];
+        $this->renderizaHtml('cursos/formulario.php', $data);
+        //require __DIR__ . '/../../view/cursos/formulario.php';
     }
 }
