@@ -2,10 +2,13 @@
 
 namespace Alura\Cursos\Controller;
 use Alura\Cursos\Entity\Curso;
+use Alura\Cursos\Helper\FlashMessageTrait;
 use Alura\Cursos\Infra\EntityManagerCreator;
 
 class Exclusao extends BaseController implements IControladorRequisicao
 {
+    use FlashMessageTrait;
+
     /** @var \Doctrine\ORM\EntityManagerInterface */
     private $entityManager;
 
@@ -27,6 +30,7 @@ class Exclusao extends BaseController implements IControladorRequisicao
         $this->entityManager->remove($curso);
         $this->entityManager->flush();
 
+        $this->defineMensagem('success', 'Curso excluído com sucesso');
         header('Location: /listar-cursos');
     }
 }

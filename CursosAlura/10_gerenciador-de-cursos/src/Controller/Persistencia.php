@@ -3,10 +3,13 @@
 namespace Alura\Cursos\Controller;
 
 use Alura\Cursos\Entity\Curso;
+use Alura\Cursos\Helper\FlashMessageTrait;
 use Alura\Cursos\Infra\EntityManagerCreator;
 
 class Persistencia extends BaseController implements IControladorRequisicao
 {
+    use FlashMessageTrait;
+
     /** @var \Doctrine\ORM\EntityManagerInterface */
     private $entityManager;
 
@@ -22,13 +25,18 @@ class Persistencia extends BaseController implements IControladorRequisicao
         //$curso->setDescricao($_POST['descricao']); // busca o dado sem limpar
 
         /** @var Curso $curso */
-        $curso = null;        
+        $curso = null;
 
         if ($id !== null && $id !== false) {
             $curso = $this->entityManager->find(Curso::class, $id);
+
+            if ($curso != null) {
+                $this->defineMensagem('success', 'Curso alterado com sucesso');
+            }
         } else {
             $curso = new Curso();
             $this->entityManager->persist($curso);
+            $this->defineMensagem('success', 'Curso inserido com sucesso');
         }
 
         if ($curso !== null) {
