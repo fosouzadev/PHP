@@ -2,7 +2,6 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Alura\Cursos\Controller\{ListarCursos, FormularioInsercao, Persistencia};
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7Server\ServerRequestCreator;
 use Psr\Http\Server\RequestHandlerInterface;
