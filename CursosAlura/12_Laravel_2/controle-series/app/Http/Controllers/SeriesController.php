@@ -12,6 +12,16 @@ use Illuminate\Http\Request;
 
 class SeriesController extends Controller
 {
+    /*
+     * felipe@teste.com.br
+     * password 12345678
+     * */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index(Request $request)
     {
         //$series = Serie::all();
