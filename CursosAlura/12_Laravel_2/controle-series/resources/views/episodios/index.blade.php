@@ -24,6 +24,8 @@
             @endforeach
         </ul>
 
+        @auth
         <button class="btn btn-primary mt-2 mb-2">Salvar</button>
+        @endauth
     </form>
 @endsection
