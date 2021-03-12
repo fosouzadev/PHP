@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-class SeriesController 
+use App\Models\Serie;
+
+class SeriesController
 {
-    
+
     public function index()
     {
-        return ['Simpsons', 'Star Wars'];
+        return Serie::all();
     }
 }
