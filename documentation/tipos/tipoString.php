@@ -8,7 +8,7 @@
 
     # heredoc : 
     // interpolam variáveis e caracteres de escape
-    // não identicar o corpo da string e nem o EOT; de fechamento
+    // não identar o corpo da string e nem o EOT; de fechamento
     $heredoc = <<<EOT
 \nisto é uma string \t com heredoc \n
 EOT;
@@ -17,7 +17,7 @@ EOT;
     # nowdoc : 
     // não interpolam variaveis ou caracteres de escape
     // item de abertura precisa estar em aspas simples
-    // não identicar o corpo da string e nem o EOD; de fechamento
+    // não identar o corpo da string e nem o EOD; de fechamento
     $nowdoc = <<<'EOD'
 \nisto é uma string \t com nowdoc
 EOD;
