@@ -13,4 +13,13 @@ class Serie extends Model
     {
         return $this->hasMany(Episodio::class);
     }
+
+    /* Eloquent possui um padrão para salvar um tipo
+       Criamos um metodo com o formato "set NomeAtributo Attribute" tratado para o tipo que queremos
+       Esse método é chamado de "Mutator"
+     */
+    public function setNomeAttribute(string $nome)
+    {
+        $this->attributes['nome'] = strtoupper($nome);
+    }
 }
