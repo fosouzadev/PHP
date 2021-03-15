@@ -8,6 +8,7 @@ class Serie extends Model
 {
     public $timestamps = false;
     protected $fillable = ['nome'];
+    protected $appends = ['links'];
 
     public function episodios()
     {
@@ -21,5 +22,13 @@ class Serie extends Model
     public function setNomeAttribute(string $nome)
     {
         $this->attributes['nome'] = strtoupper($nome);
+    }
+
+    public function getLinksAttribute($links): array
+    {
+        return [
+            'self' => '/api/series/' . $this->id,
+            'episodios' => '/api/series/' . $this->id . '/episodios'
+        ];
     }
 }
