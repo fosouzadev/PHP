@@ -38,12 +38,10 @@ class AuthServiceProvider extends ServiceProvider
                 return null;
             }
 
-            //$authorization = $request->header('Authorization');
-            //$token = str_replace('Bearer', '', $authorization);
-            //$dadosAutenticacao = JWT::decode($token, env('JWT_KEY'), [ 'HS256' ]);
-            //return new GenericUser([ 'email' => $dadosAutenticacao ]);
-
-            return new GenericUser([ 'email' => 'teste@email' ]);
+            $authorization = $request->header('Authorization');
+            $token = str_replace('Bearer ', '', $authorization);
+            $dadosAutenticacao = JWT::decode($token, env('JWT_KEY'), [ 'HS256' ]);
+            return new GenericUser([ 'email' => $dadosAutenticacao ]);
 
             //return User::where('api_token', $request->input('api_token'))->first();
         });

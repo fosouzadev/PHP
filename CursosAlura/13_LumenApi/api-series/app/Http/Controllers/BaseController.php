@@ -21,19 +21,7 @@ abstract class BaseController
         //   'data' => $series
         //]);
 
-        $authorization = $request->header('Authorization');
-        $token = str_replace('Bearer', '', $authorization);
-        $env = env('JWT_KEY');
-
-        try {
-            $dadosAutenticacao = JWT::decode($token, $env, array('HS256'));
-        } catch (\Exception $ex) {
-            return $ex->getMessage();
-        }
-
-        return [ 'token' => $token, 'env' => $env ];
-
-        //return $this->classe::paginate($request->per_page);
+        return $this->classe::paginate($request->per_page);
     }
 
     public function store(Request $request)
