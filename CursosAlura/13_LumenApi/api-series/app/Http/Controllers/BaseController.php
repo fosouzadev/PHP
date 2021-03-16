@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Firebase\JWT\JWT;
 use App\Models\{Serie, Episodio};
 use Illuminate\Http\Request;
 
@@ -20,7 +21,19 @@ abstract class BaseController
         //   'data' => $series
         //]);
 
-        return $this->classe::paginate($request->per_page);
+        $authorization = $request->header('Authorization');
+        $token = str_replace('Bearer', '', $authorization);
+        $env = env('JWT_KEY');
+
+        try {
+            $dadosAutenticacao = JWT::decode($token, $env, array('HS256'));
+        } catch (\Exception $ex) {
+            return $ex->getMessage();
+        }
+
+        return [ 'token' => $token, 'env' => $env ];
+
+        //return $this->classe::paginate($request->per_page);
     }
 
     public function store(Request $request)
