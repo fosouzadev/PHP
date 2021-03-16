@@ -1,0 +1,12 @@
+{
+    "name": "fosou/firebase-jwt",
+    "authors": [
+        {
+            "name": "Felipe",
+            "email": "fo.souza@outlook.com"
+        }
+    ],
+    "require": {
+        "firebase/php-jwt": "^5.2"
+    }
+}

@@ -109,6 +109,7 @@
       <path value="$PROJECT_DIR$/api-series/vendor/hamcrest/hamcrest-php" />
       <path value="$PROJECT_DIR$/api-series/vendor/graham-campbell/result-type" />
       <path value="$PROJECT_DIR$/api-series/vendor/voku/portable-ascii" />
+      <path value="$PROJECT_DIR$/api-series/vendor/firebase/php-jwt" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.3" />
