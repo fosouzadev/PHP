@@ -17,7 +17,7 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->group(['prefix' => 'api', 'middleware' => 'auth'], function() use ($router) {
+$router->group(['prefix' => 'api', 'middleware' => 'autenticador'], function() use ($router) {
     $router->group(['prefix' => 'series'], function() use ($router) {
         $router->get('', 'SeriesController@index');
         $router->get('{id}', 'SeriesController@show');
